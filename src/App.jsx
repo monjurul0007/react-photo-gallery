@@ -1,17 +1,26 @@
 import { Card, Container } from "react-bootstrap";
 import "./App.css";
 import Header from "./components/Header";
+import Image from "./components/Image";
+import PhotoContainer from "./components/PhotoContainer/PhotoContainer";
+import { PhotoContextProvider } from "./Context/PhotoContext";
+import UploadFile from "./components/UploadFile";
 
 function App() {
   return (
-    <Container className="pt-5">
-      <Card>
-        <Card.Header>
-          <Header />
-        </Card.Header>
-        <Card.Body>this is body</Card.Body>
-      </Card>
-    </Container>
+    <PhotoContextProvider>
+      <Container className="py-5">
+        <Card>
+          <Card.Header>
+            <Header />
+          </Card.Header>
+          <Card.Body>
+            <PhotoContainer />
+          </Card.Body>
+        </Card>
+        <UploadFile />
+      </Container>
+    </PhotoContextProvider>
   );
 }
 
