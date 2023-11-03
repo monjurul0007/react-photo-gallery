@@ -5,7 +5,20 @@ import { PhotoContext } from "../../Context/PhotoContext";
 import { Form } from "react-bootstrap";
 
 const PhotoContainer = () => {
-  const { photoIds } = useContext(PhotoContext);
+  const { photoIds, selectedPhotoIds, handleSelectedPhotoIds } =
+    useContext(PhotoContext);
+
+  const onSelectPhoto = (photoId) => {
+    const isPhotoSelected = selectedPhotoIds.some((id) => photoId === id);
+
+    if (isPhotoSelected) {
+      handleSelectedPhotoIds(
+        selectedPhotoIds.filter((item) => item !== photoId)
+      );
+    } else {
+      handleSelectedPhotoIds(selectedPhotoIds.concat(photoId));
+    }
+  };
 
   return (
     <div className="photo-container">
@@ -13,8 +26,10 @@ const PhotoContainer = () => {
         <div className={`photo${index + 1} position-relative`}>
           <Image src={item} />
           <Form.Check
-            className="position-absolute ms-3 mt-2"
+            className="position-absolute ps-3 pt-2 rounded-2 w-100 h-100 photo-checkbox"
             style={{ top: 0 }}
+            onChange={() => onSelectPhoto(index)}
+            checked={selectedPhotoIds.some((id) => index === id)}
           />
         </div>
       ))}
